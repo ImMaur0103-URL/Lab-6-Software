@@ -3,7 +3,7 @@ from typing import List
 from .models import Product
 
 # Definición de la ruta del archivo JSON para almacenar los productos
-PRODUCTS_FILE = "data/productos.json"
+PRODUCTS_FILE = "data/MOCK_DATA.json"
 
 # Definición de la función para cargar los productos desde el archivo JSON
 def load_products() -> List[Product]:
