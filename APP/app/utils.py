@@ -1,9 +1,10 @@
 import json
 from typing import List
-from .models import Product
+from models import Product
+import os
 
 # Definición de la ruta del archivo JSON para almacenar los productos
-PRODUCTS_FILE = "data/MOCK_DATA.json"
+PRODUCTS_FILE = os.getenv("APP_folder") + "data\MOCK_DATA.json"
 
 # Definición de la función para cargar los productos desde el archivo JSON
 def load_products() -> List[Product]:
@@ -12,6 +13,8 @@ def load_products() -> List[Product]:
         with open(PRODUCTS_FILE, "r") as f:
             products_data = json.load(f)
         # Conversión de los datos a objetos de Producto y retorno de la lista de productos
+        for p in products_data:
+            Product(**p)
         return [Product(**p) for p in products_data]
     except FileNotFoundError:
         # Devolución de una lista vacía si el archivo JSON no existe
