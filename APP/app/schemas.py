@@ -1,8 +1,8 @@
+# app/schemas.py
 from pydantic import BaseModel, Field, validator
 from typing import Optional
-from datetime import date
+from datetime import date, datetime
 
-# Definición de la clase base para el producto, que hereda de BaseModel de Pydantic
 class ProductBase(BaseModel):
     nombre: str = Field(..., min_length=3, max_length=100)
     descripcion: Optional[str] = Field(None, max_length=500)
@@ -13,24 +13,33 @@ class ProductBase(BaseModel):
     fecha_lanzamiento: Optional[date] = None
     imagen_url: Optional[str] = None
 
-    # Validador para el campo SKU
     @validator('sku')
     def validate_sku(cls, v):
         if not v.replace('-', '').isalnum():
             raise ValueError('SKU debe contener solo letras, números y guiones')
         return v
 
-    # Validador para el campo precio
     @validator('precio')
     def validate_precio(cls, v):
         return round(v, 2)
 
-    # Validador para el campo fecha_lanzamiento
-    @validator('fecha_lanzamiento')
+    @validator('fecha_lanzamiento', pre=True)
     def validate_fecha_lanzamiento(cls, v):
-        if v and v < date.today():
-            raise ValueError('La fecha de lanzamiento debe ser en el presente o futuro')
-        return v
+        if v is None:
+            return None
+        if isinstance(v, date):
+            return v
+        if isinstance(v, str):
+            try:
+                return datetime.strptime(v, "%m/%d/%Y").date()
+            except ValueError:
+                raise ValueError("La fecha debe estar en formato MM/DD/YYYY")
+        raise ValueError("Formato de fecha no válido")
+
+    class Config:
+        json_encoders = {
+            date: lambda v: v.strftime("%m/%d/%Y") if v else None
+        }
 
 # Definición de la clase para crear un nuevo producto, que hereda de ProductBase
 class ProductCreate(ProductBase):

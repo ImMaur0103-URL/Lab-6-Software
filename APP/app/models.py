@@ -1,9 +1,7 @@
-# Definición de modelos de datos para el producto
 # app/models.py
 from pydantic import BaseModel, Field, validator
 from typing import Optional
-from datetime import date
-import uuid
+from datetime import date, datetime
 
 class Product(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
@@ -24,11 +22,22 @@ class Product(BaseModel):
 
     @validator('precio')
     def validate_precio(cls, v):
-        return round(v, 2) 
+        return round(v, 2)
 
-    @validator('fecha_lanzamiento')
+    @validator('fecha_lanzamiento', pre=True)
     def validate_fecha_lanzamiento(cls, v):
-        date.fromisoformat(v)
-        if v and v < date.today():
-            raise ValueError('La fecha de lanzamiento debe ser en el presente o futuro')
-        return v
+        if v is None:
+            return None
+        if isinstance(v, date):
+            return v
+        if isinstance(v, str):
+            try:
+                return datetime.strptime(v, "%m/%d/%Y").date()
+            except ValueError:
+                raise ValueError("La fecha debe estar en formato MM/DD/YYYY")
+        raise ValueError("Formato de fecha no válido")
+
+    class Config:
+        json_encoders = {
+            date: lambda v: v.strftime("%m/%d/%Y") if v else None
+        }

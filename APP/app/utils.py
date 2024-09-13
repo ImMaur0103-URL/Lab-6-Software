@@ -9,15 +9,13 @@ PRODUCTS_FILE = os.getenv("APP_folder") + "data\MOCK_DATA.json"
 # Definición de la función para cargar los productos desde el archivo JSON
 def load_products() -> List[Product]:
     try:
-        # Apertura del archivo JSON y carga de los datos
         with open(PRODUCTS_FILE, "r") as f:
             products_data = json.load(f)
-        # Conversión de los datos a objetos de Producto y retorno de la lista de productos
-        for p in products_data:
-            Product(**p)
-        return [Product(**p) for p in products_data]
+        return [Product.model_validate(p) for p in products_data]
     except FileNotFoundError:
-        # Devolución de una lista vacía si el archivo JSON no existe
+        return []
+    except json.JSONDecodeError:
+        print("Error al decodificar el JSON. Verifica el formato del archivo.")
         return []
 
 # Definición de la función para guardar los productos en el archivo JSON
