@@ -1,3 +1,9 @@
+Mauricio López
+Walter Villatoro
+Mario Armas
+Esteban Ruiz
+Dulce García
+
 # API de Catálogo de Productos
 
 Este proyecto implementa una API RESTful para gestionar un catálogo de productos utilizando FastAPI y almacenamiento en JSON.
