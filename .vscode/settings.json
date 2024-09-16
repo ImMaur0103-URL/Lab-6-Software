@@ -1,0 +1,15 @@
+{
+    
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./APP/tests",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true,
+    "terminal.integrated.env.windows": {
+        "APP_folder": "${workspaceFolder}/APP/"
+    }
+}
