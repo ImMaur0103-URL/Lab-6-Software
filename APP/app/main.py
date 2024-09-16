@@ -1,8 +1,15 @@
-from fastapi import FastAPI, HTTPException, Query
-from typing import List, Optional
-from schemas import ProductCreate, ProductUpdate, ProductResponse
-from models import Product
-from utils import load_products, save_products
+if __name__ == "main":
+    from fastapi import FastAPI, HTTPException, Query
+    from typing import List, Optional
+    from schemas import ProductCreate, ProductUpdate, ProductResponse
+    from models import Product
+    from utils import load_products, save_products
+else:
+    from fastapi import FastAPI, HTTPException, Query
+    from typing import List, Optional
+    from app.schemas import ProductCreate, ProductUpdate, ProductResponse
+    from app.models import Product
+    from app.utils import load_products, save_products
 # Inicialización de la API con FastAPI
 app = FastAPI()
 

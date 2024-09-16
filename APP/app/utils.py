@@ -1,10 +1,21 @@
-import json
-from typing import List
-from models import Product
-import os
+if __name__ == "utils":
+    import json
+    from typing import List
+    from models import Product
+    import os
+else:
+    import json
+    from typing import List
+    from app.models import Product
+    import os
 
-# Definición de la ruta del archivo JSON para almacenar los productos
-PRODUCTS_FILE = os.getenv("APP_folder") + "data\MOCK_DATA.json"
+# Obtén la ruta absoluta del directorio del script actual
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Sube dos niveles en la jerarquía de directorios
+project_root = os.path.dirname(current_dir)
+
+PRODUCTS_FILE = str(project_root) + "\data\MOCK_DATA.json"
 
 # Definición de la función para cargar los productos desde el archivo JSON
 def load_products() -> List[Product]:
