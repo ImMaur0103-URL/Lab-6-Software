@@ -28,7 +28,7 @@ class ProductBase(BaseModel):
         if v is None:
             return None
         if isinstance(v, date):
-            return v
+            return datetime.strptime(v.strftime("%m/%d/%Y"), "%m/%d/%Y")
         if isinstance(v, str):
             try:
                 return datetime.strptime(v, "%m/%d/%Y").date()
@@ -38,7 +38,7 @@ class ProductBase(BaseModel):
 
     class Config:
         json_encoders = {
-            date: lambda v: v.strftime("%m/%d/%Y") if v else None
+            date: lambda v: datetime.strptime(v.strftime("%m/%d/%Y"), "%m/%d/%Y") if v else None
         }
 
 # Definición de la clase para crear un nuevo producto, que hereda de ProductBase
