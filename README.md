@@ -1,7 +1,11 @@
 Mauricio López
+
 Walter Villatoro
+
 Mario Armas
+
 Esteban Ruiz
+
 Dulce García
 
 # API de Catálogo de Productos
@@ -139,7 +143,7 @@ Las contribuciones son bienvenidas. Por favor, asegúrate de actualizar las prue
 Este proyecto fue desarrollado por:
 
 1. Mauricio Lopez. Carne: 1270818
-2. [Nombre del Creador 2]
+2. Mario Armas. Carne: 1093721
 3. [Nombre del Creador 3]
 4. [Nombre del Creador 4]
 5. [Nombre del Creador 5]
