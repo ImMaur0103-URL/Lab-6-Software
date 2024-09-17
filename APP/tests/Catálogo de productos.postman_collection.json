@@ -1,136 +1,318 @@
 {
 	"info": {
-		"_postman_id": "8bf95c49-bc98-402b-8d93-1bca67606322",
+		"_postman_id": "cb8303c9-9628-4a29-ab58-96bccdbba9a1",
 		"name": "Catálogo de productos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "38321264"
+		"_exporter_id": "19443074"
 	},
 	"item": [
 		{
-			"name": "Obtener productos",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{API}}/productos?nombre=Beans - Kidney, Red Dry&categoria=Notebook",
-					"host": [
-						"{{API}}"
-					],
-					"path": [
-						"productos"
-					],
-					"query": [
-						{
-							"key": "nombre",
-							"value": "Beans - Kidney, Red Dry"
+			"name": "Creación de Producto (POST /productos)",
+			"item": [
+				{
+					"name": "Crear producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Producto para tests\",\r\n    \"precio\": 10.0,\r\n    \"categoria\": \"Pruebas\",\r\n    \"inventario\": 10,\r\n    \"sku\": \"sku-prueba\",\r\n    \"fecha_lanzamiento\": \"09/17/2024\",\r\n    \"imagen_url\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "categoria",
-							"value": "Notebook"
-						},
-						{
-							"key": "precio_min",
-							"value": "590",
-							"disabled": true
-						},
-						{
-							"key": "precio_max",
-							"value": "600",
-							"disabled": true
+						"url": {
+							"raw": "{{API}}/productos",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							]
 						}
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Actualizar producto",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"inventario\": 20\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Lectura de Productos (GET /productos)",
+			"item": [
+				{
+					"name": "Obtener todos los productos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"JSON Query\", function () {",
+									"  pm.expect(pm.response.json().).to.include(\"1000\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
-					"host": [
-						"{{API}}"
-					],
-					"path": [
-						"productos",
-						"8277535d-d11f-4429-8d99-63c7f971b11e"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obtener producto específico",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
-					"host": [
-						"{{API}}"
-					],
-					"path": [
-						"productos",
-						"8277535d-d11f-4429-8d99-63c7f971b11e"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Eliminar producto",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
-					"host": [
-						"{{API}}"
-					],
-					"path": [
-						"productos",
-						"8277535d-d11f-4429-8d99-63c7f971b11e"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crear producto",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Producto para tests\",\r\n    \"precio\": 10.0,\r\n    \"categoria\": \"Pruebas\",\r\n    \"inventario\": 10,\r\n    \"sku\": \"sku-prueba\",\r\n    \"fecha_lanzamiento\": \"09/17/2024\",\r\n    \"imagen_url\": \"\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Obtener productos - Filtro nombre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos?nombre=Beans - Kidney",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Beans - Kidney"
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{API}}/productos",
-					"host": [
-						"{{API}}"
-					],
-					"path": [
-						"productos"
-					]
+				{
+					"name": "Obtener productos - Filtro categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos?categoria=Tarot",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							],
+							"query": [
+								{
+									"key": "categoria",
+									"value": "Tarot"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener productos - Filtro precio_min",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos?precio_min=995.00",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							],
+							"query": [
+								{
+									"key": "precio_min",
+									"value": "995.00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener productos - Filtro precio_max ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos?precio_max=15",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							],
+							"query": [
+								{
+									"key": "precio_max",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Lectura de un Producto Específico (GET /productos/{id})",
+			"item": [
+				{
+					"name": "Obtener producto específico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos",
+								"8277535d-d11f-4429-8d99-63c7f971b11e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actualización de Producto (PUT /productos/{id})",
+			"item": [
+				{
+					"name": "Actualizar producto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"inventario\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos",
+								"8277535d-d11f-4429-8d99-63c7f971b11e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Eliminación de Producto (DELETE /productos/{id})",
+			"item": [
+				{
+					"name": "Eliminar producto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos",
+								"8277535d-d11f-4429-8d99-63c7f971b11e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Config",
+			"item": [
+				{
+					"name": "Change_path - Creation test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/api/change_products_file?new_file_path=C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA_CREATE_TEST.json",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"api",
+								"change_products_file"
+							],
+							"query": [
+								{
+									"key": "new_file_path",
+									"value": "C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA_CREATE_TEST.json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "see products path",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/api/see_products_file",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"api",
+								"see_products_file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change_path - Get products test",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/api/change_products_file?new_file_path=C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA.json",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"api",
+								"change_products_file"
+							],
+							"query": [
+								{
+									"key": "new_file_path",
+									"value": "C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA.json"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

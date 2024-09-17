@@ -1,0 +1,15 @@
+{
+	"id": "5a75fbe3-7d43-41ca-8c37-da93aa99a06b",
+	"name": "Catalogo de productos",
+	"values": [
+		{
+			"key": "API",
+			"value": "http://127.0.0.1:8000",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-09-17T20:07:54.496Z",
+	"_postman_exported_using": "Postman/11.12.0"
+}
