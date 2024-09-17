@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "8bf95c49-bc98-402b-8d93-1bca67606322",
+		"name": "Catálogo de productos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38321264"
+	},
+	"item": [
+		{
+			"name": "Obtener productos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API}}/productos?nombre=Beans - Kidney, Red Dry&categoria=Notebook",
+					"host": [
+						"{{API}}"
+					],
+					"path": [
+						"productos"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "Beans - Kidney, Red Dry"
+						},
+						{
+							"key": "categoria",
+							"value": "Notebook"
+						},
+						{
+							"key": "precio_min",
+							"value": "590",
+							"disabled": true
+						},
+						{
+							"key": "precio_max",
+							"value": "600",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar producto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"inventario\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+					"host": [
+						"{{API}}"
+					],
+					"path": [
+						"productos",
+						"8277535d-d11f-4429-8d99-63c7f971b11e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener producto específico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+					"host": [
+						"{{API}}"
+					],
+					"path": [
+						"productos",
+						"8277535d-d11f-4429-8d99-63c7f971b11e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar producto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+					"host": [
+						"{{API}}"
+					],
+					"path": [
+						"productos",
+						"8277535d-d11f-4429-8d99-63c7f971b11e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear producto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Producto para tests\",\r\n    \"precio\": 10.0,\r\n    \"categoria\": \"Pruebas\",\r\n    \"inventario\": 10,\r\n    \"sku\": \"sku-prueba\",\r\n    \"fecha_lanzamiento\": \"09/17/2024\",\r\n    \"imagen_url\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{API}}/productos",
+					"host": [
+						"{{API}}"
+					],
+					"path": [
+						"productos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

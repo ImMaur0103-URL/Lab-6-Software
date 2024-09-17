@@ -48,6 +48,7 @@ class ProductCreate(ProductBase):
 # Definición de la clase para actualizar un producto existente, que hereda de ProductBase
 class ProductUpdate(ProductBase):
     nombre: Optional[str] = Field(None, min_length=3, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
     precio: Optional[float] = Field(None, gt=0)
     categoria: Optional[str] = None
     inventario: Optional[int] = Field(None, ge=0)

@@ -1,9 +1,10 @@
 from unittest.mock import patch
-import json
+import os
 import app.main as app
 import app.models as models
+import app.schemas as SCHEMA
 import unittest
-from fastapi.testclient import TestClient
+import json
 import asyncio
 
 
@@ -47,8 +48,22 @@ class TestProductAPI(unittest.TestCase):
         pass
         self.assertEqual(1,1)
 
+#1. Creación de Producto (POST /productos): 
+class TEST_1_Creación_Producto(unittest.TestCase):
+    def setup(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)
+        app.PRODUCTS_FILE = str(project_root) + "\data\MOCK_DATA_CREATE_TEST.json"
+
+    def test_create_product(self):
+        pass
+
 #2. Lectura de Productos (GET /productos):
 class TEST_2_Lectura_Productos(unittest.TestCase):
+    def setUp(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)
+        app.PRODUCTS_FILE = str(project_root) + "\data\MOCK_DATA.json"
 
     def test_read_products_no_filters(self):
         # Arrange
@@ -257,15 +272,39 @@ class TEST_2_Lectura_Productos(unittest.TestCase):
         self.assertEqual(products, expected_products_model)
 
 #4. Actualización de Producto (PUT /productos/{id}):
-class TEST_3_Lectura_Producto_Específico(unittest.TestCase):
+class TEST_4_Lectura_Producto_Específico(unittest.TestCase):
     def setUp(self):
         self.id = "cddf966f-2a1d-47fd-871a-bad6c7e408f9"
         self.original_Product = {"id":"cddf966f-2a1d-47fd-871a-bad6c7e408f9","nombre":"Pasta - Fusili, Dry","descripcion":"Pasta Penne","precio":284.54,"categoria":"Pasta","inventario":27,"sku":"UFWQP-SKU-891","fecha_lanzamiento":"05/23/2025","imagen_url":"https://ejemplo.com/at58h.png"}
-        self.update_Product = {"id":"cddf966f-2a1d-47fd-871a-bad6c7e408f9","nombre":"Pasta - Fusili, Dry","descripcion":"Pasta Penne de secado rapido","precio":5.50,"categoria":"Pasta","inventario":100,"sku":"PASTA-SKU-891","fecha_lanzamiento":"05/23/2000","imagen_url":"https://ejemplo.com/at58h.png"}
-        
-
-    def test_Product_update(sefl):
+        self.update_Product = {"nombre":"Pasta - Fusili, Dry","descripcion":"Pasta Penne de secado rapido","precio":15.50,"categoria":"Pasta","inventario":100,"sku":"PASTA-SKU-891","fecha_lanzamiento":"05/23/2000","imagen_url":"https://ejemplo.com/at58h.png"}
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)
+        app.PRODUCTS_FILE = str(project_root) + "\data\MOCK_DATA.json"
+    def test_ejemplo(self):
         pass
+        self.assertEqual(1,1)
+        
+    def test_Product_update(self):
+        # Arrange
+        update_product = SCHEMA.ProductUpdate(**self.update_Product)
+
+        # Act
+        data_saved = asyncio.run(app.update_product(self.id, update_product)).dict()
+        self.update_Product["id"] = self.id
+        
+        # Assert
+        self.assertEqual(self.update_Product["id"], data_saved["id"], 'Error El id no es igual')
+        self.assertEqual(self.update_Product["nombre"], data_saved["nombre"])
+        self.assertEqual(self.update_Product["descripcion"], data_saved["descripcion"])
+        self.assertAlmostEqual(self.update_Product["precio"], data_saved["precio"])
+        self.assertEqual(self.update_Product["categoria"], data_saved["categoria"])
+        self.assertEqual(self.update_Product["inventario"], data_saved["inventario"])
+        self.assertEqual(self.update_Product["sku"], data_saved["sku"])
+        self.assertEqual(self.update_Product["fecha_lanzamiento"], data_saved["fecha_lanzamiento"].strftime("%m/%d/%Y"))
+        self.assertEqual(self.update_Product["imagen_url"], data_saved["imagen_url"])
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
