@@ -1,0 +1,257 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Catálogo de productos",
+    "collectionId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+    "dateExported": "2024-09-17T20:22:17.604Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "3fb77789-7d88-4cf5-8f80-22a2111192be",
+            "name": "Creación de Producto (POST /productos)",
+            "containerId": "",
+            "created": "2024-09-17T20:09:31.994Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "b2a72587-0bf3-4a43-9413-aa52b020a6d4",
+            "name": "Lectura de Productos (GET /productos)",
+            "containerId": "",
+            "created": "2024-09-17T20:09:31.995Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "92cf04e8-08d9-474f-a9d7-43d92a3811c8",
+            "name": "Lectura de un Producto Específico (GET /productos/{id})",
+            "containerId": "",
+            "created": "2024-09-17T20:09:31.996Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "334ef41c-93a4-4989-8c58-ecf1b445fb80",
+            "name": "Actualización de Producto (PUT /productos/{id})",
+            "containerId": "",
+            "created": "2024-09-17T20:09:31.997Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "ec82b3c3-a3ec-43f2-bdd4-827ca033ede9",
+            "name": "Eliminación de Producto (DELETE /productos/{id})",
+            "containerId": "",
+            "created": "2024-09-17T20:09:31.998Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "75c04a55-a44d-4cd2-b7bd-601481ca2462",
+            "name": "Config",
+            "containerId": "",
+            "created": "2024-09-17T20:09:31.999Z",
+            "sortNum": 60000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "c39b1eb2-08c1-4560-b7ef-e543d904f056",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "3fb77789-7d88-4cf5-8f80-22a2111192be",
+            "name": "Crear producto",
+            "url": "{{API}}/productos",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-09-17T20:09:31.994Z",
+            "modified": "2024-09-17T20:09:31.994Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Producto para tests\",\r\n    \"precio\": 10.0,\r\n    \"categoria\": \"Pruebas\",\r\n    \"inventario\": 10,\r\n    \"sku\": \"sku-prueba\",\r\n    \"fecha_lanzamiento\": \"09/17/2024\",\r\n    \"imagen_url\": \"\"\r\n}"
+            }
+        },
+        {
+            "_id": "6d075d28-5fde-4a76-97e7-2cb51828c866",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "b2a72587-0bf3-4a43-9413-aa52b020a6d4",
+            "name": "Obtener todos los productos",
+            "url": "{{API}}/productos",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-09-17T20:09:31.995Z",
+            "modified": "2024-09-17T20:09:31.995Z",
+            "headers": [],
+            "preReq": {
+                "inlineScripts": []
+            },
+            "postReq": {
+                "inlineScripts": [
+                    {
+                        "script": [
+                            "tc.test(\"JSON Query\", function () {",
+                            "  expect(tc.response.json.).to.include(\"1000\");",
+                            "});",
+                            ""
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "d101eaa6-de25-40f4-88cf-e4921ab30b18",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "b2a72587-0bf3-4a43-9413-aa52b020a6d4",
+            "name": "Obtener productos - Filtro nombre",
+            "url": "{{API}}/productos?nombre=Beans - Kidney",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-09-17T20:09:31.996Z",
+            "modified": "2024-09-17T20:09:31.996Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "nombre",
+                    "value": "Beans - Kidney"
+                }
+            ]
+        },
+        {
+            "_id": "4c2d968d-6410-4310-8b06-41f928baa5d4",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "b2a72587-0bf3-4a43-9413-aa52b020a6d4",
+            "name": "Obtener productos - Filtro categoria",
+            "url": "{{API}}/productos?categoria=Tarot",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-09-17T20:09:31.997Z",
+            "modified": "2024-09-17T20:09:31.997Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "categoria",
+                    "value": "Tarot"
+                }
+            ]
+        },
+        {
+            "_id": "e320db64-bfcd-433d-9a4a-f2b1dd0a19ae",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "b2a72587-0bf3-4a43-9413-aa52b020a6d4",
+            "name": "Obtener productos - Filtro precio_min",
+            "url": "{{API}}/productos?precio_min=995.00",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-09-17T20:09:31.998Z",
+            "modified": "2024-09-17T20:09:31.998Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "precio_min",
+                    "value": "995.00"
+                }
+            ]
+        },
+        {
+            "_id": "c39c0c0a-2279-4063-8ab2-55a076a72cc8",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "b2a72587-0bf3-4a43-9413-aa52b020a6d4",
+            "name": "Obtener productos - Filtro precio_max ",
+            "url": "{{API}}/productos?precio_max=15",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-09-17T20:09:31.999Z",
+            "modified": "2024-09-17T20:09:31.999Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "precio_max",
+                    "value": "15"
+                }
+            ]
+        },
+        {
+            "_id": "2a34a3cd-59de-4bc7-84cb-9eeffe2d7d03",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "92cf04e8-08d9-474f-a9d7-43d92a3811c8",
+            "name": "Obtener producto específico",
+            "url": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2024-09-17T20:09:32.000Z",
+            "modified": "2024-09-17T20:09:32.000Z",
+            "headers": []
+        },
+        {
+            "_id": "97c238ca-e4d6-4e60-946a-689407a77fa5",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "334ef41c-93a4-4989-8c58-ecf1b445fb80",
+            "name": "Actualizar producto",
+            "url": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+            "method": "PUT",
+            "sortNum": 80000,
+            "created": "2024-09-17T20:09:32.001Z",
+            "modified": "2024-09-17T20:09:32.001Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"inventario\": 20\r\n}"
+            }
+        },
+        {
+            "_id": "c713ff3f-7713-4652-9be2-ec9f9f4c58c9",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "ec82b3c3-a3ec-43f2-bdd4-827ca033ede9",
+            "name": "Eliminar producto",
+            "url": "{{API}}/productos/8277535d-d11f-4429-8d99-63c7f971b11e",
+            "method": "DELETE",
+            "sortNum": 90000,
+            "created": "2024-09-17T20:09:32.002Z",
+            "modified": "2024-09-17T20:09:32.002Z",
+            "headers": []
+        },
+        {
+            "_id": "8f7b303c-1cae-48c7-9b2a-b480f84ac9a0",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "75c04a55-a44d-4cd2-b7bd-601481ca2462",
+            "name": "Change_path - Creation test",
+            "url": "{{API}}/api/change_products_file?new_file_path=C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA_CREATE_TEST.json",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2024-09-17T20:09:32.003Z",
+            "modified": "2024-09-17T20:09:32.003Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "new_file_path",
+                    "value": "C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA_CREATE_TEST.json"
+                }
+            ]
+        },
+        {
+            "_id": "612bc552-49fc-4ac4-9da0-b1e21a31e6a4",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "75c04a55-a44d-4cd2-b7bd-601481ca2462",
+            "name": "see products path",
+            "url": "{{API}}/api/see_products_file",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2024-09-17T20:09:32.004Z",
+            "modified": "2024-09-17T20:09:32.004Z",
+            "headers": []
+        },
+        {
+            "_id": "34629cad-ba65-4c17-9b26-b7b9befbe335",
+            "colId": "3cc2eedc-90a6-4093-8a98-7dcb7dd89bd8",
+            "containerId": "75c04a55-a44d-4cd2-b7bd-601481ca2462",
+            "name": "Change_path - Get products test",
+            "url": "{{API}}/api/change_products_file?new_file_path=C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA.json",
+            "method": "POST",
+            "sortNum": 120000,
+            "created": "2024-09-17T20:09:32.005Z",
+            "modified": "2024-09-17T20:09:32.005Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "new_file_path",
+                    "value": "C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA.json"
+                }
+            ]
+        }
+    ],
+    "ref": "JRjFWNzW7Y6ofERuWp3Hb0c2V19vKGXQwGzXjUTGmFrSUpi-dhyQCoriavVxEixMbjU9-FwjDT78bEHifJOovw"
+}

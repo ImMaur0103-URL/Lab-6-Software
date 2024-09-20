@@ -3,7 +3,8 @@
 		"_postman_id": "cb8303c9-9628-4a29-ab58-96bccdbba9a1",
 		"name": "Catálogo de productos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19443074"
+		"_exporter_id": "19443074",
+		"_collection_link": "https://crimson-station-317345.postman.co/workspace/My-Workspace~891d45ea-9ad4-4e11-8473-f334c4ff512f/collection/19443074-cb8303c9-9628-4a29-ab58-96bccdbba9a1?action=share&source=collection_link&creator=19443074"
 	},
 	"item": [
 		{
@@ -11,6 +12,32 @@
 			"item": [
 				{
 					"name": "Crear producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Producto de prueba\",\r\n    \"descripcion\": \"Producto para tests\",\r\n    \"precio\": 10.0,\r\n    \"categoria\": \"Pruebas\",\r\n    \"inventario\": 10,\r\n    \"sku\": \"sku-prueba\",\r\n    \"fecha_lanzamiento\": \"09/17/2024\",\r\n    \"imagen_url\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/productos",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear producto fallido",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -47,12 +74,76 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"JSON Query\", function () {",
-									"  pm.expect(pm.response.json().).to.include(\"1000\");",
+									"// Variables de entrada",
+									"const correo = pm.environment.get(\"Correo\"); // Obtén el correo desde las variables de entorno",
+									"const apiKey = pm.environment.get(\"ApiKey\"); // Obtén el API Key desde las variables de entorno",
+									"const caseId = 3; // El case_id debe estar basado en el caso de prueba actual",
+									"",
+									"// Variable `status_id` con base en el resultado de la prueba",
+									"let statusId;",
+									"const testResult = pm.response.code; // Simulación del código de estado HTTP (cambiar según el criterio de éxito o fallo)",
+									"",
+									"switch (testResult) {",
+									"    case 200: // Ejemplo de éxito",
+									"        statusId = 1; // Passed",
+									"        break;",
+									"    case 400: // Ejemplo de bloqueado",
+									"        statusId = 2; // Blocked",
+									"        break;",
+									"    case 404: // Ejemplo de fallo",
+									"        statusId = 5; // Failed",
+									"        break;",
+									"    default:",
+									"        statusId = 4; // Retest",
+									"        break;",
+									"}",
+									"",
+									"// Cuerpo de la solicitud a la API",
+									"const requestBody = {",
+									"    \"results\": [",
+									"        {",
+									"            \"case_id\": caseId,",
+									"            \"status_id\": statusId,",
+									"            \"comment\": \"This test passed\",",
+									"            \"elapsed\": \"5m\",",
+									"            \"environment\": \"qa03\"",
+									"        }",
+									"    ]",
+									"};",
+									"",
+									"// Hacer la solicitud de API con autenticación básica",
+									"pm.sendRequest({",
+									"    url: 'https://gaviarloru.testrail.io/index.php?/api/v2/add_results_for_cases/20',",
+									"    method: 'POST',",
+									"    header: {",
+									"        \"Authorization\": \"Basic \" + btoa(correo + \":\" + apiKey), // Autenticación básica con correo y API Key",
+									"        \"Content-Type\": \"application/json\"",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify(requestBody)",
+									"    }",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(\"Error en la solicitud:\", err);",
+									"    } else {",
+									"        console.log(\"Respuesta de la API:\", res);",
+									"    }",
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -66,6 +157,49 @@
 							],
 							"path": [
 								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los productos - Error por fltros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"JSON Query\", function () {",
+									"  pm.expect(pm.response.json().).to.include(\"1000\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos?precio_max=AAAA",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Test de Error",
+									"disabled": true
+								},
+								{
+									"key": "precio_max",
+									"value": "AAAA"
+								}
 							]
 						}
 					},
@@ -185,6 +319,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener producto específico Fail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos/82775",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos",
+								"82775"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -192,7 +344,7 @@
 			"name": "Actualización de Producto (PUT /productos/{id})",
 			"item": [
 				{
-					"name": "Actualizar producto",
+					"name": "Actualizar producto inexistente",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -217,6 +369,14 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Actualizar categoría de producto",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -236,6 +396,24 @@
 							"path": [
 								"productos",
 								"8277535d-d11f-4429-8d99-63c7f971b11e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar producto Fail",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API}}/productos/dryrt",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"productos",
+								"dryrt"
 							]
 						}
 					},
@@ -307,6 +485,39 @@
 									"key": "new_file_path",
 									"value": "C:\\Users\\mau_l\\OneDrive\\Documentos\\INGENIERIA DE SOFTWARE I\\Lab 6 Software\\APP\\data\\MOCK_DATA.json"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Retail  - See Cases",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{ApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{Correo}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{TestRetail}}/get_cases/1",
+							"host": [
+								"{{TestRetail}}"
+							],
+							"path": [
+								"get_cases",
+								"1"
 							]
 						}
 					},
