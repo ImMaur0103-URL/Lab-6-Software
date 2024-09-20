@@ -97,3 +97,13 @@ async def delete_product(product_id: str):
     save_products(PRODUCTS_FILE, products)
     return {"message": "Producto eliminado exitosamente"}
 
+@app.post("/api/change_products_file", response_model=dict)
+async def change_products_file(new_file_path: str):
+    global PRODUCTS_FILE
+    PRODUCTS_FILE = new_file_path
+    return {"message": f"Products file changed to: {PRODUCTS_FILE}"}
+
+@app.post("/api/see_products_file", response_model=dict)
+async def change_products_file():
+    global PRODUCTS_FILE
+    return {"message": f"Products file is: {PRODUCTS_FILE}"}
