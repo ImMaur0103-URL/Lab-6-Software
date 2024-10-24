@@ -8,7 +8,7 @@ if __name__ == "utils":
 else:
     import json
     from typing import List
-    from app.models import Product
+    from APP.app.models import Product
     import os
     from datetime import date, datetime
 
