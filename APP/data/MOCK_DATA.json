@@ -10998,5 +10998,16 @@
     "sku": "PASTA-SKU-891",
     "fecha_lanzamiento": "05/23/2000",
     "imagen_url": "https://ejemplo.com/at58h.png"
+  },
+  {
+    "id": "d8016958-6afe-4b1d-9009-3c1d721e3ae3",
+    "nombre": "Producto de prueba",
+    "descripcion": "Producto para tests",
+    "precio": 10.0,
+    "categoria": "Pruebas",
+    "inventario": 10,
+    "sku": "sku-prueba",
+    "fecha_lanzamiento": "09/17/2024",
+    "imagen_url": ""
   }
 ]

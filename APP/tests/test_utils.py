@@ -2,8 +2,8 @@ import unittest
 from unittest.mock import patch, mock_open, MagicMock
 import json
 from datetime import date
-from APP.app.utils import load_products, save_products, format_date  # Importa desde el archivo utils
-from APP.app.models import Product  # Asegúrate de que Product esté correctamente importado
+from app.utils import load_products, save_products, format_date  # Importa desde el archivo utils
+from app.models import Product  # Asegúrate de que Product esté correctamente importado
 import os
 from fastapi.testclient import TestClient
 

@@ -271,6 +271,38 @@ class TEST_2_Lectura_Productos(unittest.TestCase):
         self.assertEqual(len(products), expected_products_count)
         self.assertEqual(products, expected_products_model)
 
+#3. Lectura de un producto específico por ID o SKU
+class TEST_3_Lectura_Producto_Especifico(unittest.TestCase):
+    def setUp(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(current_dir)
+        app.PRODUCTS_FILE = str(project_root) + "\data\MOCK_DATA.json"
+    
+    def test_read_product_id(self):
+        expected_products_count = 1
+        expected_products_json = [
+            {
+                "nombre": "Taro Leaves",
+                "descripcion": "Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.",
+                "precio": 608.24,
+                "categoria": "Tarot",
+                "inventario": 35,
+                "sku": "ILQNG-SKU-428",
+                "fecha_lanzamiento": "09/07/2025",
+                "imagen_url": "https://ejemplo.com/76xbk.png",
+                "id": "0e091c7f-9008-4afa-94cd-9afe8bbf6e4f"
+            }
+        ]
+        id = "0e091c7f-9008-4afa-94cd-9afe8bbf6e4f"
+        expected_products_model = [models.Product.model_validate(p) for p in expected_products_json]
+
+        # Act
+        products = asyncio.run(app.read_products(id=id))
+
+        # Assert
+        self.assertEqual(len(products), expected_products_count)
+        self.assertEqual(products, expected_products_model)
+
 #4. Actualización de Producto (PUT /productos/{id}):
 class TEST_4_Lectura_Producto_Específico(unittest.TestCase):
     def setUp(self):
