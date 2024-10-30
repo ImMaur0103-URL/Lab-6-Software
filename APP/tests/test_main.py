@@ -303,6 +303,31 @@ class TEST_3_Lectura_Producto_Especifico(unittest.TestCase):
         self.assertEqual(len(products), expected_products_count)
         self.assertEqual(products, expected_products_model)
 
+    def test_read_product_sku(self):
+        expected_products_count = 1
+        expected_products_json = [
+            {
+                "nombre": "Chocolate - Chips Compound",
+                "descripcion": "Fusce consequat. Nulla nisl. Nunc nisl.",
+                "precio": 12.19,
+                "categoria": "Phone case",
+                "inventario": 1,
+                "sku": "PYKOM-SKU-883",
+                "fecha_lanzamiento": "04/24/2025",
+                "imagen_url": "https://ejemplo.com/829ln.png",
+                "id": "817e4cdb-c009-4368-8524-068f236eb447"
+            }
+        ]
+        sku = "PYKOM-SKU-883"
+        expected_products_model = [models.Product.model_validate(p) for p in expected_products_json]
+
+        # Act
+        products = asyncio.run(app.read_products(sku=sku))
+
+        # Assert
+        self.assertEqual(len(products), expected_products_count)
+        self.assertEqual(products, expected_products_model)
+
 #4. Actualización de Producto (PUT /productos/{id}):
 class TEST_4_Lectura_Producto_Específico(unittest.TestCase):
     def setUp(self):
