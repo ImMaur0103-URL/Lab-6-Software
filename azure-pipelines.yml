@@ -1,0 +1,232 @@
+openapi: 3.0.0
+info:
+  title: Catálogo de productos API
+  description: API para la gestión del catálogo de productos
+  version: '1.0.0'
+  contact:
+    name: Mauricio Lopez
+    email: mauricio@example.com
+servers:
+  - url: '{{API}}'
+paths:
+  /productos:
+    post:
+      summary: Crear un producto
+      description: Permite crear un nuevo producto en el catálogo.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Producto de prueba"
+                descripcion:
+                  type: string
+                  example: "Producto para tests"
+                precio:
+                  type: number
+                  example: 10.0
+                categoria:
+                  type: string
+                  example: "Pruebas"
+                inventario:
+                  type: integer
+                  example: 10
+                sku:
+                  type: string
+                  example: "sku-prueba"
+                fecha_lanzamiento:
+                  type: string
+                  example: "09/17/2024"
+                imagen_url:
+                  type: string
+                  example: ""
+      responses:
+        '201':
+          description: Producto creado correctamente
+        '400':
+          description: Error en la creación del producto
+    get:
+      summary: Obtener todos los productos
+      description: Devuelve una lista de todos los productos.
+      responses:
+        '200':
+          description: Lista de productos devuelta con éxito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producto'
+        '400':
+          description: Error en la solicitud
+  /productos/{id}:
+    get:
+      summary: Obtener un producto específico
+      description: Permite obtener un producto utilizando su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      responses:
+        '200':
+          description: Producto devuelto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        '404':
+          description: Producto no encontrado
+    put:
+      summary: Actualizar un producto existente
+      description: Permite actualizar la información de un producto existente.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producto'
+      responses:
+        '200':
+          description: Producto actualizado correctamente
+        '404':
+          description: Producto no encontrado
+  /productos?nombre={nombre}:
+    get:
+      summary: Filtrar productos por nombre
+      description: Filtrar productos cuyo nombre coincida con el valor dado.
+      parameters:
+        - name: nombre
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Nombre del producto
+      responses:
+        '200':
+          description: Lista de productos filtrada por nombre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producto'
+  /productos?categoria={categoria}:
+    get:
+      summary: Filtrar productos por categoría
+      description: Filtrar productos cuyo categoría coincida con el valor dado.
+      parameters:
+        - name: categoria
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Categoría del producto
+      responses:
+        '200':
+          description: Lista de productos filtrada por categoría
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producto'
+  /productos?precio_min={precio_min}:
+    get:
+      summary: Filtrar productos por precio mínimo
+      description: Filtrar productos cuyo precio sea mayor o igual al valor dado.
+      parameters:
+        - name: precio_min
+          in: query
+          required: true
+          schema:
+            type: number
+          description: Precio mínimo
+      responses:
+        '200':
+          description: Lista de productos filtrada por precio mínimo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producto'
+  /productos?precio_max={precio_max}:
+    get:
+      summary: Filtrar productos por precio máximo
+      description: Filtrar productos cuyo precio sea menor o igual al valor dado.
+      parameters:
+        - name: precio_max
+          in: query
+          required: true
+          schema:
+            type: number
+          description: Precio máximo
+      responses:
+        '200':
+          description: Lista de productos filtrada por precio máximo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Producto'
+                  components:
+                  schemas:
+                    Producto:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "8277535d-d11f-4429-8d99-63c7f971b11e"
+                        nombre:
+                          type: string
+                          example: "Producto de prueba"
+                        descripcion:
+                          type: string
+                          example: "Producto para tests"
+                        precio:
+                          type: number
+                          example: 10.0
+                        categoria:
+                          type: string
+                          example: "Pruebas"
+                        inventario:
+                          type: integer
+                          example: 10
+                        sku:
+                          type: string
+                          example: "sku-prueba"
+                        fecha_lanzamiento:
+                          type: string
+                          format: date
+                          example: "2024-09-17"
+                        imagen_url:
+                          type: string
+                          example: ""
+                        estado:
+                          type: string
+                          enum: [disponible, agotado, en_produccion]
+                          example: "disponible"
+                        fabricante:
+                          type: string
+                          example: "Fabricante Ejemplo"
+                        proveedor:
+                          type: string
+                          example: "Proveedor Ejemplo"
+                        peso:
+                          type: number
+                          example: 1.5
